@@ -1,0 +1,15 @@
+{
+    "env": [
+        {
+            "EGMANTRA": "C:/Git/egMantraTools"
+
+        },
+        {
+            "HOUDINI_OTLSCAN_PATH": "$EGMANTRA/otls"
+        },
+        {
+            "EGRS_ICONS": "$EGMANTRA/icons"
+        }
+    ],
+    "path": "$EGMANTRA"
+}
