@@ -8,7 +8,7 @@
             "HOUDINI_OTLSCAN_PATH": "$EGMANTRA/otls"
         },
         {
-            "EGRS_ICONS": "$EGMANTRA/icons"
+            "EGMANTRA_ICONS": "$EGMANTRA/icons"
         }
     ],
     "path": "$EGMANTRA"
