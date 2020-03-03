@@ -1,8 +1,8 @@
 #####################################
-#LICENSE                            #
+#              LICENSE              #
 #####################################
 #
-# Copyright (C) 2019  Elmar Glaubauf
+# Copyright (C) 2020  Elmar Glaubauf
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 """
-
-This script will create a Mantra Node Network based on a file selection with OCIO Transforms for Textures
+This script will create a Redshift Node Network based on a file selection
 
 Twitter: @eglaubauf
 Web: www.elmar-glaubauf.at
-
 """
 
 import re
@@ -48,8 +46,8 @@ class MaterialBuild:
 
 
     def __init__(self):
-        
-        #Init Variables 
+
+        #Init Variables
         self.initVariables()
         #Fill Variables (by User)
         self.getFiles()
@@ -57,12 +55,12 @@ class MaterialBuild:
         self.username = self.getName()
         #Create Material
         self.createMaterial()
-        
+
 
     def initVariables(self):
         # Variables used by Class
         self.img = ""
-        
+
         #MaterialComponents
         self.base_color = ""
         self.roughness = ""
@@ -74,14 +72,14 @@ class MaterialBuild:
         self.ao = ""
         self.uv = ""
 
-        
+
     def createMaterial(self):
 
         #Create Materialbuilder
         mb = self.mat.createNode("materialbuilder")
         mb.setName(self.username, True)
         mb.moveToGoodPosition()
-        
+
         #Get Surface Output Node
         so = mb.glob("surface_output")[0]
         #Create Mantra Specific Nodes
@@ -89,7 +87,7 @@ class MaterialBuild:
         so.setInput(0, se, 0)
         so.setInput(1, se, 1)
         so.setInput(4, se, 2)
-            
+
         #Create PrincipledShader
         pc = mb.createNode("principledshader")
 
@@ -104,7 +102,7 @@ class MaterialBuild:
         se.setInput(0, pc, 2)
 
         self.uv = mb.createNode("uvcoords::2.0")
-            
+
         #################
         ######Layers#####
         #################
@@ -125,20 +123,20 @@ class MaterialBuild:
             self.createTexture(mb, pc, self.reflect, "Reflectivity")
         if self.normal is not "":
             self.normal = self.convertFiles(self.normal, 1)
-            self.createNormal(mb, pc, self.normal, "Normal")  
+            self.createNormal(mb, pc, self.normal, "Normal")
         if self.displace is not "":
             self.displace = self.convertFiles(self.displace, 1)
             self.createDisplace(mb, pc, self.displace,"Displace")
         if self.bump is not "":
             self.bump = self.convertFiles(self.bump, 1)
-            self.createNormal(mb, pc, self.bump, "Bump")     
+            self.createNormal(mb, pc, self.bump, "Bump")
 
         mb.layoutChildren()
-        
+
         return
 
     def createTexture(self, parent, connector, channel, channelName):
-        
+
         #Create Texture Object and set String
         tex = parent.createNode("texture::2.0")
         tex.setName(channelName, True)
@@ -146,7 +144,7 @@ class MaterialBuild:
 
         #Connect UV Node
         tex.setInput(0, self.uv, 0)
-        
+
         #Create OCIO Node
         oc = parent.createNode("ocio_transform")
         oc.parm("fromspace").set("Utility - Linear - sRGB")
@@ -175,15 +173,15 @@ class MaterialBuild:
         return
 
     def createNormal(self, parent, connector, channel, channelName):
-        
+
         #Create Displacement Node
         tex = parent.createNode("displacetexture")
         tex.setName(channelName, True)
-        tex.parm("texture").set(channel)  
-        
+        tex.parm("texture").set(channel)
+
         #Connect UV Node
         tex.setInput(2, self.uv, 0)
-        
+
         #Connect Texture-Component to Shader
         if channelName is "Normal":
             tex.parm("type").set("normal")
@@ -195,16 +193,16 @@ class MaterialBuild:
         return
 
     def createDisplace(self, parent, connector,  channel, channelName):
-        
+
         #Create Displacement Texture Node
         tex = parent.createNode("displacetexture")
         tex.setName(channelName, True)
-        tex.parm("texture").set(channel)  
+        tex.parm("texture").set(channel)
         tex.parm("scale").set("0.1")
-        
+
         #Connect UV Node
         tex.setInput(2, self.uv, 0)
-        
+
         #Connect Displacement Node
         parent.glob("displacement_output")[0].setInput(0,tex, 0)
         parent.glob("displacement_output")[0].setInput(1,tex, 1)
@@ -216,10 +214,10 @@ class MaterialBuild:
         group = prop.parmTemplateGroup()
         folder = hou.FolderParmTemplate("folder", "Shading")
         folder.addParmTemplate(hou.FloatParmTemplate("vm_displacebound", "Displacement Bound", 1))
-        group.append(folder)    
+        group.append(folder)
         prop.setParmTemplateGroup(group)
         prop.parm("vm_displacebound").set(1)
-        
+
         #Connect
         parent.glob("*collect")[0].setInput(2,prop,0)
 
@@ -243,7 +241,7 @@ class MaterialBuild:
 
 
     def convertFiles(self, channel, linear):
-        
+
         #Get Reference to COPs Context
         cop = hou.node("/img")
         img = cop.createNode("img", "tmp")
@@ -264,16 +262,16 @@ class MaterialBuild:
 
         #Convert Stuff
         read.parm("filename1").set(channel)
-        
+
         #Change Filename
         namePos = channel.rfind(".")
         name = channel[:namePos]
         name += self.extension
-        
+
         #Render
         rop.parm("copoutput").set(name)
         rop.parm("execute").pressButton()
-        
+
         #Cleanup
         img.destroy()
 
@@ -291,26 +289,26 @@ class MaterialBuild:
             username = re.sub(r"[^a-zA-Z0-9]+", ' ', k)
         return username.replace(" ", "_")
 
-        
+
     def getFiles(self):
-        
+
         #Read Files from User
         files = hou.ui.selectFile(title="Please choose Files to create a Material from", collapse_sequences = False, multiple_select = True, file_type = hou.fileType.Image)
         if files is "":
             exit()
         strings = files.split(";")
-        
+
         #Get all entries
         for i, s in enumerate(strings):
             #Remove Spaces
             s = s.rstrip(' ')
             s = s.lstrip(' ')
-            
+
             #Get Name of File
             name = s.split(".")
             k = name[0].rfind("/")
             name = name[0][k+1:]
-        
+
             #Check which types have been selected. Config as you need
             if "base_color" in name.lower() or "basecolor" in name.lower():
                 self.base_color = s
@@ -330,6 +328,5 @@ class MaterialBuild:
                 self.bump = s
             elif "ao" in name.lower() or "ambient_occlusion" in name:
                 self.ao = s
-        
-        return
 
+        return
