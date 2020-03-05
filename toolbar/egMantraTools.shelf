@@ -23,19 +23,19 @@ reload(eg_materialBuild_Mantra)
 eg_materialBuild_Mantra.run()]]></script>
   </tool>
 
-  <tool name="toRAT" label="toRAT" icon="$EGMANTRA_ICONS\rat.png">
+  <tool name="toRAT" label="toRAT" icon="$EGMANTRA_ICONS/rat.png">
     <script scriptType="python"><![CDATA[import eg_convertToRat
 reload(eg_convertToRat)
 eg_convertToRat.run()]]></script>
   </tool>
 
-  <tool name="MatBuild OCIO" label="MatBuild OCIO" icon="$EGMANTRA_ICONS\rat.png">
+  <tool name="MatBuild OCIO" label="MatBuild OCIO" icon="$EGMANTRA_ICONS/rat.png">
     <script scriptType="python"><![CDATA[import eg_materialBuildMantra_OCIO
 reload(eg_materialBuildMantra_OCIO)
 eg_materialBuildMantra_OCIO.run()]]></script>
   </tool>
 
-  <tool name="MatBuild" label="MatBuild" icon="$EGMANTRA_ICONS\rat.png">
+  <tool name="MatBuild" label="MatBuild" icon="$EGMANTRA_ICONS/rat.png">
     <script scriptType="python"><![CDATA[import materialBuild_Mantra.controller as matBuild
 reload(matBuild)
 matBuild.open()]]></script>
