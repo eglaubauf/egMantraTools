@@ -114,7 +114,7 @@ class MantraMat():
             diff = None
             cc = None
             if self.cc_diffuse:  # User Setting - Create ColorCorrecter
-                cc = self.insertCC(self.material_builder, self.principled, "Base_Color")
+                cc = self.insertCC(self.material_builder, self.principled, "basecolor")
                 diff = self.create_texture(self.material_builder, cc, self.files["basecolor"], "Base_Color")
             else:
                 diff = self.create_texture(self.material_builder, self.principled, self.files["basecolor"], "Base_Color")
@@ -153,8 +153,10 @@ class MantraMat():
         if self.is_linear(channel):
             tex.parm("srccolorspace").set(1)
 
-        if channelName == "Base_Color":
+        if connector.type().name() == "colorcorrection":
             # insert User Linear
+            connector.setInput(0, tex, 0)
+        elif channelName == "Base_Color":
             connector.setNamedInput("basecolor", tex, 0)
         elif channelName == "Roughness":
             connector.setNamedInput("rough", tex, 0)
