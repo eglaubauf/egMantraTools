@@ -185,14 +185,12 @@ class MantraMat():
         bump.parm("type").set('normal')
 
         # Create Tex
-        # tex = parent.createNode("redshift::TextureSampler")
-        # tex.setName(channelName, True)
         bump.parm("texture").set(channel)
-        # tex.parm("tex0_gammaoverride").set('1')
 
         # Connect Things
-        # bump.setInput(0, tex, 0)
         connector.setNamedInput("baseN", bump, 1)
+        # Optional - Add Displacment Bounds
+
 
     def create_displace(self, parent, connector, channel, channelName):
         """Creates and connects a DisplacementMap"""

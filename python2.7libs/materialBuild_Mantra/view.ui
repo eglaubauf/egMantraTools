@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>327</width>
-    <height>455</height>
+    <height>509</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -88,13 +88,6 @@
       <widget class="QCheckBox" name="cbx_convert">
        <property name="text">
         <string>Convert Textures to OCIO</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="cbx_convertRat">
-       <property name="text">
-        <string>Convert Textures to Rat</string>
        </property>
       </widget>
      </item>

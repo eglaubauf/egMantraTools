@@ -13,7 +13,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 class Ui_RSMatBuilder(object):
     def setupUi(self, RSMatBuilder):
         RSMatBuilder.setObjectName("RSMatBuilder")
-        RSMatBuilder.resize(327, 455)
+        RSMatBuilder.resize(327, 509)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -52,9 +52,6 @@ class Ui_RSMatBuilder(object):
         self.cbx_convert = QtWidgets.QCheckBox(RSMatBuilder)
         self.cbx_convert.setObjectName("cbx_convert")
         self.verticalLayout.addWidget(self.cbx_convert)
-        self.cbx_convertRat = QtWidgets.QCheckBox(RSMatBuilder)
-        self.cbx_convertRat.setObjectName("cbx_convertRat")
-        self.verticalLayout.addWidget(self.cbx_convertRat)
         self.cbx_heightDisp = QtWidgets.QCheckBox(RSMatBuilder)
         self.cbx_heightDisp.setObjectName("cbx_heightDisp")
         self.verticalLayout.addWidget(self.cbx_heightDisp)
@@ -95,7 +92,6 @@ class Ui_RSMatBuilder(object):
         self.cbx_diffLinear.setText(_translate("RSMatBuilder", "Diffuse is Linear"))
         self.cbx_ccDiffuse.setText(_translate("RSMatBuilder", "ColorCorrection on Diffuse"))
         self.cbx_convert.setText(_translate("RSMatBuilder", "Convert Textures to OCIO"))
-        self.cbx_convertRat.setText(_translate("RSMatBuilder", "Convert Textures to Rat"))
         self.cbx_heightDisp.setText(_translate("RSMatBuilder", "Height is Displacement"))
         self.cbx_dispLinear.setText(_translate("RSMatBuilder", "Displace is Linear"))
         self.cbx_bumpLinear.setText(_translate("RSMatBuilder", "Bump is Linear"))

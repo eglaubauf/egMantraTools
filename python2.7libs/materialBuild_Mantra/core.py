@@ -25,12 +25,12 @@
 import hou
 import eg_MantraMat
 import eg_setupOGL
-import eg_convert
+import eg_convertOCIO as conv
 import re
 
 reload(eg_MantraMat)
 reload(eg_setupOGL)
-reload(eg_convert)
+reload(conv)
 
 
 class Core():
@@ -221,7 +221,7 @@ class Core():
 
     def convert_tex(self):
         """Converts Textures to OCIO"""
-        f = eg_convert.convertOCIO(self.files)
+        f = conv.convertOCIO(self.files)
         f.convert()
         self.files = f.get_files()
 
