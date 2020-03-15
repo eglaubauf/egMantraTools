@@ -26,11 +26,13 @@ import hou
 import eg_MantraMat
 import eg_setupOGL
 import eg_convertOCIO as conv
+import eg_convertToRat as conv_rat
 import re
 
 reload(eg_MantraMat)
 reload(eg_setupOGL)
 reload(conv)
+reload(conv_rat)
 
 
 class Core():
@@ -135,6 +137,9 @@ class Core():
     def get_convert(self):
         return self.convert
 
+    def get_convert_rat(self):
+        return self.convert_rat
+
     def set_ogl(self, enabled):
         """Sets if OGL Parameters will be created"""
         self.ogl = enabled
@@ -223,6 +228,13 @@ class Core():
         """Converts Textures to OCIO"""
         f = conv.convertOCIO(self.files)
         f.convert()
+        self.files = f.get_files()
+
+    def convert_rat_tex(self):
+        """Converts Textures to .rat"""
+        f = conv_rat.Converter()
+        f.set_files(self.files)
+        f.convert_files()
         self.files = f.get_files()
 
     def create_ogl_attribs(self):

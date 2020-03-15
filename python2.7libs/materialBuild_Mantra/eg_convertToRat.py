@@ -30,56 +30,119 @@ Web: www.elmar-glaubauf.at
 
 import hou
 
-def run():
 
+def run():
+    """Run from Shelf Tool"""
     c = Converter()
     c.get_textures()
-    c.convert()
+    c.convert_user()
 
     c.finish()
 
 ############################
 
 
-# Converter Class
-
 class Converter():
+    """This Class converts Textures to .rat Format - either pass a String List on creation or a dictionary via set_files()"""
 
     def __init__(self, textures=None):
 
         self.textures = textures
         self.errors = []
+
+        self.files = {
+            "basecolor": None,
+            "roughness": None,
+            "normal": None,
+            "metallic": None,
+            "reflect": None,
+            "height": None,
+            "displace": None,
+            "bump": None,
+            "ao": None
+        }
+
         self.count = 0
 
-    # Check and convert
-    def convert(self):
+    def set_files(self, files):
+        """Set a Dictionary of Files to be converted. recommended for Scripting Usage"""
+
+        if isinstance(files, dict):
+            self.files = files
+            return
+
+        print("but here")
+        if files == "":
+            return
+        strings = files.split(";")
+
+        # Get all Entries
+        for i, s in enumerate(strings):
+            # Remove Spaces
+            s = s.rstrip(' ')
+            s = s.lstrip(' ')
+
+            # Get Name of File
+            name = s.split(".")
+            k = name[0].rfind("/")
+            name = name[0][k + 1:]
+
+            # Check which types have been selected. Config as you need
+            if "base_color" in name.lower() or "basecolor" in name.lower():
+                self.files["basecolor"] = s
+            elif "roughness" in name.lower():
+                self.files["roughness"] = s
+            elif "normal" in name.lower():
+                self.files["normal"] = s
+            elif "metallic" in name.lower():
+                self.files["metallic"] = s
+            elif "reflect" in name.lower():
+                self.files["reflect"] = s
+            elif "height" in name.lower():
+                self.files["height"] = s
+            elif "displace" in name.lower():
+                self.files["displace"] = s
+            elif "bump" in name.lower():
+                self.files["bump"] = s
+            elif "ao" in name.lower() or "ambient_occlusion" in name:
+                self.files["ao"] = s
+
+    def convert_files(self):
+        """Converts a Dictionary of Files"""
+        for key in self.files:
+            if self.files[key]:
+                self.files[key] = self.convert_file(self.files[key])
+
+    def convert_user(self):
+        """Converts a Texutre List passed as a List of string - recommend for use as a converter via Shelf Tool"""
         if self.textures is None:
             hou.ui.displayMessage("No valid Textures have been passed")
             return
 
-        for f in self.textures:
-            self.convert_file(f)
+        for n, f in enumerate(self.textures):
+            self.textures[n] = self.convert_file(f)
             self.count += 1
 
     # Returns Count
     def get_count(self):
+        """Returns a count of converted Files/Textures"""
         return self.count
 
     # Load Textures from User
     def get_textures(self):
-
+        """Get Files from a use via User Interaction - Legacy Shelf Tool Usage"""
         # Read Files from User
-        files = hou.ui.selectFile(title="Please choose Files to create a Material from", collapse_sequences = False, multiple_select = True, file_type = hou.fileType.Image)
-        if files == "":
+        strings = hou.ui.selectFile(title="Please choose Files to create a Material from", collapse_sequences = False, multiple_select = True, file_type = hou.fileType.Image)
+        if strings == "":
             exit()
-        self.textures = files.split(";")
+        self.textures = strings.split(";")
         # Remove Leading spaces
-        for c, f in enumerate(self.textures):
-            self.textures[c] = f.lstrip(' ')
+        for c, s in enumerate(self.textures):
+            self.textures[c] = s.lstrip(' ')
 
     # Converts Files
     def convert_file(self, tex):
-
+        """Converts a single file from any texture to .rat"""
         cop = hou.node("/img")
         img = cop.createNode("img", "tmp")
 
@@ -102,17 +165,22 @@ class Converter():
         # Cleanup
         img.destroy()
 
-    # Cleanup after Converting
+        return name
+
     def finish(self):
+        """Cleanup after converting"""
         text = str(self.count) + " Textures converted. \n "
 
         if self.errors:
             text = self.printErrors(text)
         hou.ui.displayMessage(text)
 
-    # Print Errors if happend - no exception to continue other files
-    def printErrors(self, text):
+    def get_files(self):
+        """Returns files passed over in the files-Dict"""
+        return self.files
 
+    def printErrors(self, text):
+        """Print Errors if happend - no exception to continue other files"""
         text = text + "Errors: \n"
         msg = ""
         for s in self.errors:

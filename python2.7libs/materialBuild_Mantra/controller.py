@@ -82,7 +82,7 @@ class Controller(QtWidgets.QDialog, view.Ui_RSMatBuilder):
         self.cbx_context.toggled.connect(self.set_context)
 
         self.cbx_convert.toggled.connect(self.set_convert)
-        # self.cbx_convertRat.toggled.connect(self.set_convert_rat)
+        self.cbx_convertRat.toggled.connect(self.set_convert_rat)
 
         self.cbx_setupOGL.toggled.connect(self.set_ogl)
         self.cbx_useTex.toggled.connect(self.use_tex)
@@ -110,7 +110,7 @@ class Controller(QtWidgets.QDialog, view.Ui_RSMatBuilder):
         self.cbx_heightDisp.setDisabled(True)
         self.cbx_ccDiffuse.setDisabled(True)
         self.cbx_diffLinear.setDisabled(True)
-        # self.cbx_convertRat.setDisabled(True)
+        self.cbx_convertRat.setDisabled(True)
         self.cbx_dispLinear.setDisabled(True)
         self.cbx_bumpLinear.setDisabled(True)
 
@@ -163,8 +163,8 @@ class Controller(QtWidgets.QDialog, view.Ui_RSMatBuilder):
             self.cbx_dispLinear.setChecked(False)
             self.set_disp_linear()
 
-            # self.cbx_convertRat.setDisabled(True)
-            # self.cbx_convertRat.setChecked(False)
+            self.cbx_convertRat.setDisabled(True)
+            self.cbx_convertRat.setChecked(False)
             self.set_diff_linear()
 
         else:
@@ -172,7 +172,7 @@ class Controller(QtWidgets.QDialog, view.Ui_RSMatBuilder):
             self.cbx_heightDisp.setDisabled(False)
             self.cbx_ccDiffuse.setDisabled(False)
             self.cbx_diffLinear.setDisabled(False)
-            # self.cbx_convertRat.setDisabled(False)
+            self.cbx_convertRat.setDisabled(False)
             self.cbx_dispLinear.setDisabled(False)
             self.cbx_bumpLinear.setDisabled(False)
 
@@ -184,11 +184,11 @@ class Controller(QtWidgets.QDialog, view.Ui_RSMatBuilder):
         else:
             self.core.set_convert(False)
 
-    # def set_convert_rat(self):
-    #     if self.cbx_convertRat.isChecked():
-    #         self.core.set_convert_rat(True)
-    #     else:
-    #         self.core.set_convert_rat(False)
+    def set_convert_rat(self):
+        if self.cbx_convertRat.isChecked():
+            self.core.set_convert_rat(True)
+        else:
+            self.core.set_convert_rat(False)
 
     def set_height_displace(self):
         if self.cbx_heightDisp.isChecked():
@@ -238,9 +238,12 @@ class Controller(QtWidgets.QDialog, view.Ui_RSMatBuilder):
             f = hou.ui.selectFile(title="Please choose Files to create a Material from", collapse_sequences=False, image_chooser=False, multiple_select=True, file_type=hou.fileType.Image)
             self.core.set_files(f)
 
-        # Convert Textures
+        # Convert Textures to OCIO
         if self.core.get_convert():
             self.core.convert_tex()
+        # Convert Textures to .rat
+        if self.core.get_convert_rat():
+            self.core.convert_rat_tex()
 
     # Execute Material Creation
     def execute(self):

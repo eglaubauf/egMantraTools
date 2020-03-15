@@ -92,6 +92,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QCheckBox" name="cbx_convertRat">
+       <property name="text">
+        <string>Convert Textures to .rat</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QCheckBox" name="cbx_heightDisp">
        <property name="text">
         <string>Height is Displacement</string>
