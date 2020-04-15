@@ -6,9 +6,9 @@
  a single file. -->
 
   <toolshelf name="egMantraTools" label="egMantraTools">
-    <memberTool name="toRAT"/>
+    <memberTool name="to OCIO"/>
     <memberTool name="MatBuild"/>
-    <memberTool name="MatBuild OCIO"/>
+    <memberTool name="toRAT0"/>
   </toolshelf>
 
   <tool name="MaterialBuild MantraOCIO" label="MaterialBuild MantraOCIO" icon="$EGMANTRA_ICONS\rat.png">
@@ -39,5 +39,17 @@ eg_materialBuildMantra_OCIO.run()]]></script>
     <script scriptType="python"><![CDATA[import eg_materialBuild_Mantra
 reload(eg_materialBuild_Mantra)
 eg_materialBuild_Mantra.run()]]></script>
+  </tool>
+
+  <tool name="to OCIO" label="to OCIO" icon="$EGMANTRA_ICONS/rat.png">
+    <script scriptType="python"><![CDATA[import materialBuild_Mantra.eg_convertOCIO as convert
+reload(convert)
+convert.run()]]></script>
+  </tool>
+
+  <tool name="toRAT0" label="toRAT" icon="$EGMANTRA_ICONS/rat.png">
+    <script scriptType="python"><![CDATA[import materialBuild_Mantra.eg_convertToRat as convert
+reload(convert)
+convert.run()]]></script>
   </tool>
 </shelfDocument>
