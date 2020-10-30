@@ -36,9 +36,9 @@ eg_materialBuildMantra_OCIO.run()]]></script>
   </tool>
 
   <tool name="MatBuild" label="MatBuild" icon="$EGMANTRA_ICONS/rat.png">
-    <script scriptType="python"><![CDATA[import eg_materialBuild_Mantra
-reload(eg_materialBuild_Mantra)
-eg_materialBuild_Mantra.run()]]></script>
+    <script scriptType="python"><![CDATA[import materialBuild_Mantra.controller as mb
+reload(mb)
+mb.open()]]></script>
   </tool>
 
   <tool name="to OCIO" label="to OCIO" icon="$EGMANTRA_ICONS/rat.png">
