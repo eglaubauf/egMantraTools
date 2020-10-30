@@ -1,15 +1,26 @@
 {
     "env": [
         {
-            "EGMANTRA": "C:/Git/egMantraTools"
+            "EGMANTRA": "C:/Users/Elmar/Documents/Git/egMantraTools"
 
         },
         {
-            "HOUDINI_OTLSCAN_PATH": "$EGMANTRA/otls"
+            "HOUDINI_OTLSCAN_PATH": [
+                "$EGMANTRA/otls",
+                {
+                    "method": "append"
+                }
+            ]
         },
         {
             "EGMANTRA_ICONS": "$EGMANTRA/icons"
         }
     ],
-    "path": "$EGMANTRA"
+    "path": [
+        "$EGMANTRA",
+        {
+            "method": "append"
+        }
+    ]
+
 }
