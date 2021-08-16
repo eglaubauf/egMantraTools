@@ -19,14 +19,17 @@ A collection of scripts for Redshift in SideFx Houdini
 ### additional Infos
 
 - easy Install via Packages Workflow - see more below
-- Tested on Houdini 18.5.376
+- Tested on Houdini 18.5.633
+- Tested on Ubuntu 20.04
+- this repo provides py2 and py3 support
+- New Features will not be implemented on py2
 
 
 ### Installation:
 
 Copy the Provided egRedshiftTools.json to your houdini user Directory within the packages folder:
 
-```/home/<user>/houdini18.0/packages```
+```/home/<user>/houdini18.5/packages```
 
 Change the below line according to where you downloaded the git-Repository:
 
