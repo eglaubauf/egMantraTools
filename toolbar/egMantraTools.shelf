@@ -36,20 +36,50 @@ eg_materialBuildMantra_OCIO.run()]]></script>
   </tool>
 
   <tool name="MatBuild" label="MatBuild" icon="$EGMANTRA_ICONS/rat.png">
-    <script scriptType="python"><![CDATA[import materialBuild_Mantra.controller as mb
-reload(mb)
-mb.open()]]></script>
+    <script scriptType="python"><![CDATA[import sys
+if (sys.version_info > (3, 0)):
+ # Python 3 code in this block
+    import materialBuild_Mantra.controller as mb
+    import importlib
+    importlib.reload(mb)      
+    mb.open()
+else:
+ # Python 2 code in this block
+    import materialBuild_Mantra.controller as mb
+    reload(mb)
+    mb.open()]]></script>
   </tool>
 
   <tool name="to OCIO" label="to OCIO" icon="$EGMANTRA_ICONS/rat.png">
-    <script scriptType="python"><![CDATA[import materialBuild_Mantra.eg_convertOCIO as convert
-reload(convert)
-convert.run()]]></script>
+    <script scriptType="python"><![CDATA[import sys
+if (sys.version_info > (3, 0)):
+ # Python 3 code in this block
+        import materialBuild_Mantra.eg_convertOCIO as convert
+        import importlib
+        importlib.reload(convert)
+        convert.run()
+else:
+ # Python 2 code in this block
+    import materialBuild_Mantra.eg_convertOCIO as convert
+    reload(convert)
+    convert.run()]]></script>
   </tool>
 
   <tool name="toRAT0" label="toRAT" icon="$EGMANTRA_ICONS/rat.png">
-    <script scriptType="python"><![CDATA[import materialBuild_Mantra.eg_convertToRat as convert
-reload(convert)
-convert.run()]]></script>
+    <script scriptType="python"><![CDATA[
+
+import sys
+if (sys.version_info > (3, 0)):
+ # Python 3 code in this block
+    import materialBuild_Mantra.eg_convertToRat as convert
+    import importlib
+    importlib.reload(convert)      
+    convert.run()
+else:
+ # Python 2 code in this block
+    import materialBuild_Mantra.eg_convertToRat as convert
+    reload(convert)
+    convert.run()
+ ]]></script>
   </tool>
 </shelfDocument>
