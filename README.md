@@ -43,8 +43,4 @@ All of the scripts are free of charge for free use, commercial or non commercial
 
 ### Contact/Issues/Features/Questions
 
-If you find any bugs, have suggestions or anything else please open Issues or contact me via twitter or mail. Please check out my other Repos as well, they might be handy to you.
-
-<br>
-Twitter: @eglaubauf <br>
-Web: www.elmar-glaubauf.at
+If you find any bugs, have suggestions or anything else please open an issue
